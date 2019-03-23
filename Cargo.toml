@@ -5,3 +5,6 @@ authors = ["Patrick Byrne <34053+pbyrne@users.noreply.github.com>"]
 edition = "2018"
 
 [dependencies]
+rand = "0.6.5"
+regex = "1"
+
