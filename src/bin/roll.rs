@@ -1,4 +1,4 @@
-use roller::Die;
+use roller::dice::Die;
 
 fn main() {
     let die = Die::new(6);
