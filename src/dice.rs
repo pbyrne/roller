@@ -2,17 +2,17 @@ use rand::{thread_rng,Rng};
 
 #[derive(Debug)]
 pub struct Die {
-    sides: u32,
+    sides: u64,
 }
 
 impl Die {
-    pub fn new(sides: u32) -> Die {
+    pub fn new(sides: u64) -> Die {
         Die {
             sides: sides,
         }
     }
 
-    pub fn roll(&self) -> u32 {
+    pub fn roll(&self) -> u64 {
         let mut rng = thread_rng();
         rng.gen_range(1, self.sides + 1)
     }
@@ -25,23 +25,23 @@ impl PartialEq for Die {
 }
 
 pub struct Result {
-    modifier: i32,
-    rolls: Vec<u32>,
+    modifier: i64,
+    rolls: Vec<u64>,
 }
 
 impl Result {
-    pub fn total(&self) -> i32 {
-        self.modifier + self.rolls.iter().sum::<u32>() as i32
+    pub fn total(&self) -> i64 {
+        self.modifier + self.rolls.iter().sum::<u64>() as i64
     }
 }
 
 pub struct Roller {
     dice: Vec<Die>,
-    modifier: i32,
+    modifier: i64,
 }
 
 impl Roller {
-    pub fn new(dice: Vec<Die>, modifier: i32) -> Roller {
+    pub fn new(dice: Vec<Die>, modifier: i64) -> Roller {
         Roller {
             dice: dice,
             modifier: modifier,
