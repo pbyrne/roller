@@ -1,4 +1,4 @@
-use super::dice::{Die,Roller,RollResult};
+use super::dice::{Roller,RollResult};
 
 pub struct Config {
     definition: String,
