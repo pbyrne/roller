@@ -33,6 +33,8 @@ impl Result {
     pub fn total(&self) -> i64 {
         self.modifier + self.rolls.iter().sum::<u64>() as i64
     }
+
+    pub fn rolls(&self) -> &Vec<u64> { &self.rolls }
 }
 
 pub struct Roller {

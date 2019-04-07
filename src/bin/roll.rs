@@ -1,7 +1,14 @@
-use roller::dice::Die;
+use roller::dice::{Die,Roller};
 
 fn main() {
-    let die = Die::new(6);
+    let roller = Roller::new(
+        vec![
+          Die::new(10),
+          Die::new(10),
+        ],
+        4,
+    );
+    let result = roller.roll();
 
-    println!("Rolling 1d6: {}", die.roll())
+    println!("Rolled {} (from {:?})", result.total(), result.rolls());
 }
