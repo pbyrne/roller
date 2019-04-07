@@ -25,3 +25,11 @@ roll --version
 * `roll 3d4-2`: roll 2 4-sided dice and subtract 2 from the result.
 * `roll 4d8+2d10`: roll 4 8-sided dice and 2 10-sided dice and combine the result.
 
+TODOs
+-----
+
+* `2d5+4d20`
+* Graceful error handling on invalid input
+* `--help`
+* `--version`
+* `--verbose` vs not
