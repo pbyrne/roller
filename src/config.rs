@@ -9,8 +9,8 @@ pub struct Config {
 impl Config {
     pub fn new(args: &Vec<String>) -> Config {
         // TODO use something like clap or getopts to make this more robust
-        let program = &args[0];
-        let definition = &args[1];
+        let program = &args.get(0).unwrap();
+        let definition = &args.get(1).unwrap_or(&"1d6".to_string()).to_string();
         // TODO make this dynamic from the definition
         let roller = dice::Roller::new(
             vec![dice::Die::new(10), dice::Die::new(10)],
@@ -26,6 +26,12 @@ impl Config {
 
     pub fn result(&self) -> dice::Result {
         self.roller.roll()
+    }
+
+    pub fn run(&self) {
+        let result = self.result();
+
+        println!("Rolled {} (from {:?})", result.total(), result.rolls());
     }
 }
     // let roller = Roller::new(
