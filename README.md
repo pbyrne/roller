@@ -33,3 +33,5 @@ TODOs
 * `--help`
 * `--version`
 * `--verbose` vs not
+* Publish as a public crate
+* Make installable via Homebrew?
