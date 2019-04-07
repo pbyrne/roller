@@ -35,14 +35,6 @@ impl Config {
         println!("Rolled {} (from {:?})", result.total(), result.rolls());
     }
 }
-    // let roller = Roller::new(
-    //     vec![
-    //       Die::new(10),
-    //       Die::new(10),
-    //     ],
-    //     4,
-    // );
-    // let result = roller.roll();
 
 #[cfg(test)]
 mod test_config {
