@@ -8,7 +8,7 @@ pub struct Die {
 impl Die {
     pub fn new(sides: u64) -> Die {
         Die {
-            sides: sides,
+            sides,
         }
     }
 
@@ -43,8 +43,8 @@ pub struct Roller {
 impl Roller {
     pub fn new(dice: Vec<Die>, modifier: i64) -> Roller {
         Roller {
-            dice: dice,
-            modifier: modifier,
+            dice,
+            modifier,
         }
     }
 
@@ -53,7 +53,7 @@ impl Roller {
 
         Result {
             modifier: self.modifier,
-            rolls: rolls,
+            rolls,
         }
     }
 }
