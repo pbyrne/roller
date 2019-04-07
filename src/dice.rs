@@ -1,4 +1,5 @@
 use rand::{thread_rng,Rng};
+use regex::Regex;
 
 #[derive(Debug)]
 pub struct Die {
@@ -10,6 +11,16 @@ impl Die {
         Die {
             sides,
         }
+    }
+
+    fn generate_dice(count: u64, sides: u64) -> Vec<Die> {
+        let mut result: Vec<Die> = vec![];
+        // vec![Die::new(sides)]
+        for _ in 0..count {
+            result.push(Die::new(sides))
+        };
+
+        result
     }
 
     pub fn roll(&self) -> u64 {
@@ -48,6 +59,27 @@ impl Roller {
             dice,
             modifier,
         }
+    }
+
+    pub fn parse(definition: &str) -> Roller {
+        let regex = Regex::new(r"(?P<num>\d+)?d(?P<sides>\d+)(?P<modifier>[+-]\d+)?").unwrap();
+        let capture = regex.captures(definition).unwrap();
+        let num: u64 = match capture.name("num") {
+            Some(value) => value.as_str().parse().unwrap(),
+            None => 1,
+        };
+        let sides: u64 = match capture.name("sides") {
+            Some(value) => value.as_str().parse().unwrap(),
+            None => 6,
+        };
+        let modifier: i64 = match capture.name("modifier") {
+            Some(value) => value.as_str().parse().unwrap(),
+            None => 0,
+        };
+
+        let dice = Die::generate_dice(num, sides);
+
+        Roller::new(dice, modifier)
     }
 
     pub fn roll(&self) -> RollResult {
@@ -106,6 +138,51 @@ mod test_roller {
         assert_eq!(result.rolls.len(), roller.dice.len());
         assert_eq!(result.modifier, roller.modifier);
     }
+
+    #[test]
+    fn roller_parse_accepts_d_n() {
+        let definition = "d4";
+        let roller = Roller::parse(definition);
+
+        assert_eq!(1, roller.dice.len());
+        assert_eq!(4, roller.dice[0].sides);
+        assert_eq!(0, roller.modifier)
+    }
+
+    #[test]
+    fn roller_parse_accepts_n_d_m() {
+        let definition = "2d8";
+        let roller = Roller::parse(definition);
+
+        assert_eq!(2, roller.dice.len());
+        assert_eq!(8, roller.dice[0].sides);
+        assert_eq!(8, roller.dice[1].sides);
+        assert_eq!(0, roller.modifier);
+    }
+
+    #[test]
+    fn roller_parse_accepts_n_d_m_plus_x() {
+        let definition = "3d4+5";
+        let roller = Roller::parse(definition);
+
+        assert_eq!(3, roller.dice.len());
+        assert_eq!(4, roller.dice[0].sides);
+        assert_eq!(5, roller.modifier);
+    }
+
+    #[test]
+    fn roller_parse_accepts_n_d_m_minux_x() {
+        let definition = "1d20-5";
+        let roller = Roller::parse(definition);
+
+        assert_eq!(1, roller.dice.len());
+        assert_eq!(20, roller.dice[0].sides);
+        assert_eq!(-5, roller.modifier);
+    }
+
+    // fn roller_parse_accepts_n_d_m_plus_x_d_y()
+    // fn roller_parse_accepts_n_d_m_plus_x_d_y_plus_z()
+    // fn roller_parse_accepts_arbitrary_whitespace()
 }
 
 #[cfg(test)]

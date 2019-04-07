@@ -11,11 +11,7 @@ impl Config {
         // TODO use something like clap or getopts to make this more robust
         let program = &args[0];
         let definition = &args.get(1).unwrap_or(&"1d6".to_string()).to_string();
-        // TODO make this dynamic from the definition
-        let roller = Roller::new(
-            vec![Die::new(10), Die::new(10)],
-            2
-        );
+        let roller = Roller::parse(definition);
 
         Config {
             definition: definition.to_string(),
@@ -36,12 +32,13 @@ impl Config {
     }
 }
 
+
 #[cfg(test)]
 mod test_config {
     use super::*;
 
     #[test]
-    fn config_parse_interprets_input() {
+    fn config_new_interprets_input() {
         let args: Vec<String> = vec!["roll".to_string(), "2d10".to_string()];
         let config = Config::new(&args);
 
