@@ -1,14 +1,9 @@
-use roller::dice::{Die,Roller};
+use roller::config::Config;
+use std::env;
 
 fn main() {
-    let roller = Roller::new(
-        vec![
-          Die::new(10),
-          Die::new(10),
-        ],
-        4,
-    );
-    let result = roller.roll();
+    let config = Config::new(&env::args().collect());
+    let result = config.result();
 
     println!("Rolled {} (from {:?})", result.total(), result.rolls());
 }
