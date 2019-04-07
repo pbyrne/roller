@@ -1,8 +1,8 @@
-use super::dice;
+use super::dice::{Die,Roller,RollResult};
 
 pub struct Config {
     definition: String,
-    roller: dice::Roller,
+    roller: Roller,
     program: String,
 }
 
@@ -12,8 +12,8 @@ impl Config {
         let program = &args.get(0).unwrap();
         let definition = &args.get(1).unwrap_or(&"1d6".to_string()).to_string();
         // TODO make this dynamic from the definition
-        let roller = dice::Roller::new(
-            vec![dice::Die::new(10), dice::Die::new(10)],
+        let roller = Roller::new(
+            vec![Die::new(10), Die::new(10)],
             2
         );
 
@@ -24,11 +24,12 @@ impl Config {
         }
     }
 
-    pub fn result(&self) -> dice::Result {
+    pub fn result(&self) -> RollResult {
         self.roller.roll()
     }
 
     pub fn run(&self) {
+        // TODO do different things based on input (`--help`, `--version`)
         let result = self.result();
 
         println!("Rolled {} (from {:?})", result.total(), result.rolls());

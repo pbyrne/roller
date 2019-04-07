@@ -24,12 +24,12 @@ impl PartialEq for Die {
     }
 }
 
-pub struct Result {
+pub struct RollResult {
     modifier: i64,
     rolls: Vec<u64>,
 }
 
-impl Result {
+impl RollResult {
     pub fn total(&self) -> i64 {
         self.modifier + self.rolls.iter().sum::<u64>() as i64
     }
@@ -50,10 +50,10 @@ impl Roller {
         }
     }
 
-    pub fn roll(&self) -> Result {
+    pub fn roll(&self) -> RollResult {
         let rolls = self.dice.iter().map(|d| d.roll() ).collect();
 
-        Result {
+        RollResult {
             modifier: self.modifier,
             rolls,
         }
@@ -114,7 +114,7 @@ mod test_result {
 
     #[test]
     fn result_total_sums_rolls() {
-        let result = Result {
+        let result = RollResult {
             modifier: 0,
             rolls: vec![1, 2, 3, 4],
         };
@@ -124,7 +124,7 @@ mod test_result {
 
     #[test]
     fn result_total_adds_modifier() {
-        let result = Result {
+        let result = RollResult {
             modifier: 2,
             rolls: vec![1, 2],
         };
@@ -134,7 +134,7 @@ mod test_result {
 
     #[test]
     fn result_total_subtracts_modifier() {
-        let result = Result {
+        let result = RollResult {
             modifier: -4,
             rolls: vec![6, 7],
         };
