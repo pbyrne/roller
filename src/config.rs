@@ -9,7 +9,7 @@ pub struct Config {
 impl Config {
     pub fn new(args: &Vec<String>) -> Config {
         // TODO use something like clap or getopts to make this more robust
-        let program = &args.get(0).unwrap();
+        let program = &args[0];
         let definition = &args.get(1).unwrap_or(&"1d6".to_string()).to_string();
         // TODO make this dynamic from the definition
         let roller = Roller::new(
