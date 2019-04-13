@@ -83,7 +83,7 @@ impl Roller {
     }
 
     pub fn roll(&self) -> RollResult {
-        let rolls = self.dice.iter().map(|d| d.roll() ).collect();
+        let rolls = self.dice.iter().map(Die::roll).collect();
 
         RollResult {
             modifier: self.modifier,
