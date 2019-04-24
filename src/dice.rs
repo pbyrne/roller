@@ -50,18 +50,22 @@ impl RollResult {
 
 pub struct Roller {
     dice: Vec<Die>,
-    modifier: i64,
+    modifiers: Vec<i64>,
 }
 
 impl Roller {
-    pub fn new(dice: Vec<Die>, modifier: i64) -> Roller {
+    pub fn new(dice: Vec<Die>, modofiers: Vec<i64>) -> Roller {
         Roller {
             dice,
-            modifier,
+            modifiers,
         }
     }
 
     pub fn parse(definition: &str) -> Roller {
+        let mut dice = vec!<Die>;
+        let mut modifiers = vec!<i64>
+
+        definition.split(char::is_whitespace).each 
         let regex = Regex::new(r"(?P<num>\d+)?d(?P<sides>\d+)(?P<modifier>[+-]\d+)?").unwrap();
         let capture = regex.captures(definition).unwrap();
         let num: u64 = match capture.name("num") {
@@ -86,7 +90,7 @@ impl Roller {
         let rolls = self.dice.iter().map(Die::roll).collect();
 
         RollResult {
-            modifier: self.modifier,
+            modifiers: self.modifiers,
             rolls,
         }
     }
@@ -121,13 +125,13 @@ mod test_roller {
     #[test]
     fn roller_new_accepts_input() {
         let dice = vec![Die::new(6), Die::new(4)];
-        let modifier = 6;
-        let roller = Roller::new(dice, modifier);
+        let modifiers = vec![6];
+        let roller = Roller::new(dice, modifiers);
 
         assert_eq!(2, roller.dice.len());
         assert_eq!(6, roller.dice[0].sides);
         assert_eq!(4, roller.dice[1].sides);
-        assert_eq!(modifier, roller.modifier);
+        assert_eq!([6], roller.modifiers);
     }
 
     #[test]
@@ -180,7 +184,17 @@ mod test_roller {
         assert_eq!(-5, roller.modifier);
     }
 
-    // fn roller_parse_accepts_n_d_m_plus_x_d_y()
+    #[test]
+    fn roller_parse_accepts_n_d_m_plus_x_d_y() {
+        let definition = "2d4 1d8";
+        let roller = Roller::parse(definition);
+
+        assert_eq!(3, roller.dice.len());
+        assert_eq!(4, roller.dice[0].sides);
+        assert_eq!(4, roller.dice[1].sides);
+        assert_eq!(8, roller.dice[2].sides);
+    }
+
     // fn roller_parse_accepts_n_d_m_plus_x_d_y_plus_z()
     // fn roller_parse_accepts_arbitrary_whitespace()
 }
