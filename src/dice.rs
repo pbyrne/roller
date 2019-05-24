@@ -1,4 +1,4 @@
-use rand::{thread_rng,Rng};
+use rand::{thread_rng, Rng};
 use regex::Regex;
 
 #[derive(Debug)]
@@ -8,9 +8,7 @@ pub struct Die {
 
 impl Die {
     pub fn new(sides: u64) -> Die {
-        Die {
-            sides,
-        }
+        Die { sides }
     }
 
     fn generate_dice(count: u64, sides: u64) -> Vec<Die> {
@@ -18,7 +16,7 @@ impl Die {
         // vec![Die::new(sides)]
         for _ in 0..count {
             result.push(Die::new(sides))
-        };
+        }
 
         result
     }
@@ -45,7 +43,9 @@ impl RollResult {
         self.modifier + self.rolls.iter().sum::<u64>() as i64
     }
 
-    pub fn rolls(&self) -> &Vec<u64> { &self.rolls }
+    pub fn rolls(&self) -> &Vec<u64> {
+        &self.rolls
+    }
 }
 
 pub struct Roller {
@@ -55,10 +55,7 @@ pub struct Roller {
 
 impl Roller {
     pub fn new(dice: Vec<Die>, modifier: i64) -> Roller {
-        Roller {
-            dice,
-            modifier,
-        }
+        Roller { dice, modifier }
     }
 
     pub fn parse(definition: &str) -> Roller {

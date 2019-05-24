@@ -1,4 +1,4 @@
-use super::dice::{Roller,RollResult};
+use super::dice::{RollResult, Roller};
 
 pub struct Config {
     definition: String,
@@ -31,7 +31,6 @@ impl Config {
         println!("Rolled {} (from {:?})", result.total(), result.rolls());
     }
 }
-
 
 #[cfg(test)]
 mod test_config {
