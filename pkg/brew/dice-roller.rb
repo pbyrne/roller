@@ -5,10 +5,10 @@ class DiceRoller < Formula
 
   if OS.mac?
       url "https://github.com/pbyrne/roller/releases/download/v#{version}/dice-roller-v#{version}-x86_64-apple-darwin.tar.gz"
-      sha256 "92446c6b28b6c726f91ad66a03bcd533fc6e1a28ef4b44c27bfe2d49a0f88531"
+      sha256 "7af757c4cc9c41023031ebc0d67245b80de46cc6e07ef0d7a0368438c0cd2173"
   elsif OS.linux?
-      url "https://github.com/pbyrne/roller/releases/download/v#{version}/dice-roller-v#{version}-x86_64-unknown-linux-musl.tar.gz"
-      sha256 "ce74cabac9b39b1ad55837ec01e2c670fa7e965772ac2647b209e31ead19008c"
+      url "https://github.com/pbyrne/roller/releases/download/v#{version}/dice-roller-v#{version}-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "7df56571413a77ec1ff4998c7d504d086530b5140afd54d51bb86f1df4f9033c"
   end
 
   def install
