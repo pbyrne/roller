@@ -1,6 +1,6 @@
 extern crate clap;
 use clap::{Arg, App, crate_authors, crate_description, crate_version};
-use roller::runner::Runner;
+use dice_roller::runner::Runner;
 
 fn main() {
     let config = App::new("roller")

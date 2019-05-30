@@ -3,7 +3,7 @@ authors = ["Patrick Byrne <oss@contact.patrickbyrne.net>"]
 description = "Roll dice from the command line."
 edition = "2018"
 license = "MIT"
-name = "roller"
+name = "dice-roller"
 repository = "https://github.com/pbyrne/roller"
 version = "0.1.0"
 
