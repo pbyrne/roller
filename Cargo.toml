@@ -1,10 +1,12 @@
 [package]
 name = "roller"
+description = "Roll dice from the command line."
 version = "0.1.0"
-authors = ["Patrick Byrne <34053+pbyrne@users.noreply.github.com>"]
+authors = ["Patrick Byrne <oss@contact.patrickbyrne.net>"]
 edition = "2018"
 
 [dependencies]
+clap = "2.33.0"
 rand = "0.6.5"
 regex = "1.1.5"
 
