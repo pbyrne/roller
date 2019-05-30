@@ -1,8 +1,73 @@
+# Based on the "trust" template v0.1.2
+# https://github.com/japaric/trust/tree/v0.1.2
+
+dist: trusty
 language: rust
-rust:
-  - stable
-  - beta
-  - nightly
+services: docker
+sudo: required
+
+env:
+  global:
+    - CRATE_NAME=dice-roller
+
 matrix:
-  allow_failures:
-    - rust: nightly
+  include:
+    # Linux
+    - env: TARGET=x86_64-unknown-linux-gnu
+
+    # OSX
+    - env: TARGET=x86_64-apple-darwin
+      os: osx
+
+    # *BSD
+    - env: TARGET=x86_64-unknown-freebsd DISABLE_TESTS=1
+
+    # Windows
+    - env: TARGET=x86_64-pc-windows-gnu
+
+    # Testing other channels
+    - env: TARGET=x86_64-apple-darwin
+      os: osx
+      rust: nightly
+
+before_install:
+  - set -e
+  - rustup self update
+
+install:
+  - sh ci/install.sh
+  - source ~/.cargo/env || true
+
+script:
+  - bash ci/script.sh
+
+after_script: set +e
+
+before_deploy:
+  - sh ci/before_deploy.sh
+
+deploy:
+  api_key:
+    secure: "S5aLIvZKXh3VAZsCDWbqiNoETRIgujZT0AyHj9QJjP79OirC9uELIqm/aaV4IZ1cDBePGsMVKNozhZEv8ZIb1rs8Ec3hUHcF9tNwVd+SgbxgtPuZX50Kwk1m0vUTWkmGKARVBWTNORsgLz7iMdGHMORWsPgGjq7BOplyue7MtqW4tLHyopNNMBC3BctRBt2HWHLGD7kVPmL5/4DjBbtA5pycMkQwZ1vQOjCxfaRoYBmAcGAjnV+HBYuBYEczzF57GQkPn9daPRotk6MwmHOz61D85WK4ET9CU/GCWTWSLn4y62+1DlMbUkNa3OWbU/NSnK5oVumP6I0JO0lK+iRM15bqK9nDCIhFkLr4BwBL/9I++Meo0u9Hy9kh8LY6codM6vxvk9HAFd0p/pmbI2ayM7iKuSGsoUgo18MM/dhfj+7IO6mLwlkXAUCpuqcpyjARhaf3P1i3hi4BH2OkJcZBXBhivMO0ZRzl0vrxpfJsiGJFWcIWFqUo2IhbnK+t7DjgSHMybZ35ifPkRT2zNHRG8TUDagDNhU8D5R0m8y5WvdkyJqkKFa1bO+WYVrmtns4LuJk5jjlLYkMs/52IaSVTQpkknF+AziDZ59nudpCcNv9VoY6+jyUeP+cblbtgd5ih5K75s66XX/eAXab8mcO4PlEOR+UsUHf4ds2TsPnUQqY="
+  file_glob: true
+  file: $CRATE_NAME-$TRAVIS_TAG-$TARGET.*
+  on:
+    condition: $TRAVIS_RUST_VERSION = stable
+    tags: true
+  provider: releases
+  skip_cleanup: true
+
+cache: cargo
+before_cache:
+  # Travis can't cache files that are not readable by "others"
+  - chmod -R a+r $HOME/.cargo
+
+branches:
+  only:
+    # release tags
+    - /^v\d+\.\d+\.\d+.*$/
+    - master
+
+notifications:
+  email:
+    on_success: never
