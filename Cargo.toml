@@ -2,6 +2,7 @@
 authors = ["Patrick Byrne <oss@contact.patrickbyrne.net>"]
 description = "Roll dice from the command line."
 edition = "2018"
+exclude = ["HomebrewFormula"]
 license = "MIT"
 name = "dice-roller"
 readme = "README.md"
