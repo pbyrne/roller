@@ -8,13 +8,15 @@ Usage
 
 ```
 roll [--verbose] [DEFINITION]
+roll --help
 roll --version
 ```
 
 ### Options
 
+* `--help`: display available commands and options.
 * `--verbose`: include the individual dice rolls in the output; by default displays only the total.
-* `--version`: display the version information.
+* `--version`: display version.
 
 ### Definition
 
