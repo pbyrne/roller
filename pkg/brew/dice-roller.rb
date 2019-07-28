@@ -1,5 +1,5 @@
 class DiceRoller < Formula
-  version "0.1.3"
+  version "1.0.0"
   desc "Roll dice from the command line."
   homepage "https://github.com/pbyrne/roller"
 
