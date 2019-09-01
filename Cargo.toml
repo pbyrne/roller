@@ -14,5 +14,5 @@ travis-ci = { repository = "pbyrne/roller" }
 
 [dependencies]
 clap = "2.33.0"
-rand = "0.6.5"
+rand = "0.7"
 regex = "1.1.5"
