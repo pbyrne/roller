@@ -13,7 +13,6 @@ impl Die {
 
     fn generate_dice(count: u64, sides: u64) -> Vec<Die> {
         let mut result: Vec<Die> = vec![];
-        // vec![Die::new(sides)]
         for _ in 0..count {
             result.push(Die::new(sides))
         }
